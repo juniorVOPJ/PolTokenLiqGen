@@ -1,0 +1,10 @@
+{
+  "tokenName": "TetherUS",
+  "tokenSymbol": "USDT",
+  "tokenDecimals": "18",
+  "initialSupply": "1",
+  "contractName": "TetherUSToken",
+  "timestamp": "2025-03-17T11:32:04.381Z",
+  "contractAddress": "0xFf9b1F0871Cbd2e76a40B20fa0E9a955DE964584",
+  "deployTimestamp": "2025-03-17T11:34:10.234Z"
+}

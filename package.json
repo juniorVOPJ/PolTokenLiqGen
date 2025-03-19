@@ -1,0 +1,38 @@
+{
+  "name": "token-manipulator-polygon",
+  "version": "1.0.0",
+  "description": "Token deployment and manipulation tools for Polygon",
+  "main": "index.js",
+  "scripts": {
+    "contract": "node scripts/contract.js",
+    "deploy": "npx hardhat run scripts/deploy.js --network polygon",
+    "deploy:testnet": "npx hardhat run scripts/deploy.js --network polygonMumbai",
+    "mint": "npx hardhat run scripts/mint.js --network polygon",
+    "liq-quickswap": "npx hardhat run scripts/liq-quickswap.js --network polygon",
+    "prepare-metadata": "npx hardhat run scripts/prepare-metadata.js",
+    "create-wallets": "node scripts/create-wallets.js",
+    "distribute-tokens": "npx hardhat run scripts/distribute-tokens.js --network polygon",
+    "random-transactions": "npx hardhat run scripts/random-transactions.js --network polygon",
+    "distribute-tokens:testnet": "npx hardhat run scripts/distribute-tokens.js --network polygonMumbai",
+    "random-transactions:testnet": "npx hardhat run scripts/random-transactions.js --network polygonMumbai"
+  },
+  "keywords": [
+    "polygon",
+    "crypto",
+    "token",
+    "blockchain",
+    "erc20"
+  ],
+  "author": "Vilmo Oliveira de Paula Junior",
+  "license": "ISC",
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@openzeppelin/contracts": "^4.9.6",
+    "dotenv": "^16.4.7",
+    "hardhat": "^2.22.19"
+  },
+  "dependencies": {
+    "@chainlink/contracts": "^0.8.0",
+    "crypto": "^1.0.1"
+  }
+}
