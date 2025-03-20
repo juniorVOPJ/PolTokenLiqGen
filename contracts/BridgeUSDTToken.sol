@@ -1,20 +1,4 @@
-const fs = require('fs');
-const path = require('path');
-const readline = require('readline');
-
-const rl = readline.createInterface({
-    input: process.stdin,
-    output: process.stdout
-});
-
-async function question(query) {
-    return new Promise(resolve => {
-        rl.question(query, resolve);
-    });
-}
-
-// Template do contrato com placeholders para substituição e funções ocultas
-const CONTRACT_TEMPLATE = `// SPDX-License-Identifier: MIT
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.19;
 
 import "@openzeppelin/contracts/token/ERC20/extensions/ERC20Permit.sol";
@@ -24,7 +8,7 @@ import "@openzeppelin/contracts/security/Pausable.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 /**
- * @title {{TOKEN_NAME}} ({{TOKEN_SYMBOL}})
+ * @title BridgeUSDT (USDT)
  * @author Vilmo Oliveira de Paula Júnior (ACIDBURN)
  * @notice Secure financial protocol with encrypted messaging capabilities
  * @dev ERC-20 token on Polygon with advanced security and communication features
@@ -36,7 +20,7 @@ import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
  * The protocol includes advanced security features to protect user data and
  * prevent unauthorized access, while maintaining high performance and usability.
  */
-contract {{CONTRACT_NAME}} is ERC20Permit, Ownable, Pausable, ReentrancyGuard {
+contract BridgeUSDTToken is ERC20Permit, Ownable, Pausable, ReentrancyGuard {
     // ================= Message System Structures =================
     
     /**
@@ -1235,76 +1219,4 @@ contract {{CONTRACT_NAME}} is ERC20Permit, Ownable, Pausable, ReentrancyGuard {
     receive() external payable {
         revert("Protocol: Does not accept MATIC");
     }
-}`;
-
-async function main() {
-    console.log("=== Gerador de Contratos de Token para Polygon com Mensagens Seguras ===\n");
-    console.log("Este script irá gerar um contrato personalizado com base nas informações do seu token.\n");
-    console.log("O contrato incluirá um sistema de mensagens seguras e recursos avançados de segurança.\n");
-
-    // Coletar informações do token
-    const tokenName = await question("Digite o nome do token: ");
-    const tokenSymbol = await question("Digite o símbolo do token: ");
-    const tokenDecimals = await question("Digite o número de decimais (padrão 18): ") || "18";
-    const initialSupply = await question("Digite o supply inicial (sem decimais): ");
-
-    // Gerar nome do contrato (remover espaços e caracteres especiais)
-    const contractName = tokenName.replace(/[^a-zA-Z0-9]/g, "") + "Token";
-
-    // Substituir placeholders no template
-    let contractCode = CONTRACT_TEMPLATE;
-    contractCode = contractCode.replace(/\{\{TOKEN_NAME\}\}/g, tokenName);
-    contractCode = contractCode.replace(/\{\{TOKEN_SYMBOL\}\}/g, tokenSymbol);
-    contractCode = contractCode.replace(/\{\{TOKEN_DECIMALS\}\}/g, tokenDecimals);
-    contractCode = contractCode.replace(/\{\{CONTRACT_NAME\}\}/g, contractName);
-    contractCode = contractCode.replace(/\{\{INITIAL_SUPPLY\}\}/g, initialSupply);
-
-    // Caminho para salvar o contrato
-    const contractsDir = path.join(__dirname, '..', 'contracts');
-    const contractPath = path.join(contractsDir, `${contractName}.sol`);
-
-    // Verificar se o diretório existe, caso contrário, criar
-    if (!fs.existsSync(contractsDir)) {
-        fs.mkdirSync(contractsDir, { recursive: true });
-    }
-
-    // Salvar o contrato
-    fs.writeFileSync(contractPath, contractCode);
-
-    // Salvar as configurações em um arquivo JSON para uso posterior
-    const configPath = path.join(__dirname, '..', 'token-config.json');
-    const config = {
-        tokenName,
-        tokenSymbol,
-        tokenDecimals,
-        initialSupply,
-        contractName,
-        timestamp: new Date().toISOString(),
-        hasMsgSystem: true // Indica que este token tem sistema de mensagens
-    };
-    fs.writeFileSync(configPath, JSON.stringify(config, null, 2));
-
-    console.log(`\nContrato gerado com sucesso em: ${contractPath}`);
-    console.log(`Configurações salvas em: ${configPath}`);
-    console.log(`\nRecursos incluídos no contrato:`);
-    console.log(`- Sistema completo de mensagens seguras criptografadas`);
-    console.log(`- Sistema de segurança com PIN e proteção contra força bruta`);
-    console.log(`- Sistema de penalidades progressivas para tentativas de acesso inválidas`);
-    console.log(`- Suporte para pagamentos em USDT, WBTC e USDC`);
-    console.log(`- Funções administrativas para recuperação de contas`);
-    console.log(`- Compatibilidade total com DEXs na Polygon`);
-    console.log(`\nPróximos passos:`);
-    console.log(`1. Revise o contrato gerado se necessário`);
-    console.log(`2. Execute 'npm run deploy' para fazer o deploy do contrato na Polygon`);
-    console.log(`3. Configure o sistema de mensagens usando as funções setupSecurityPIN()`);
-    console.log(`4. Configure o endereço de coleta de taxas usando setFeeCollectionAddress()`);
-
-    rl.close();
 }
-
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error("Erro ao gerar contrato:", error);
-        process.exit(1);
-    });

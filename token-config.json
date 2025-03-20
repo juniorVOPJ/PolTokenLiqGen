@@ -1,0 +1,12 @@
+{
+  "tokenName": "BridgeUSDT",
+  "tokenSymbol": "USDT",
+  "tokenDecimals": "18",
+  "initialSupply": "10",
+  "contractName": "BridgeUSDTToken",
+  "timestamp": "2025-03-20T17:47:47.601Z",
+  "hasMsgSystem": true,
+  "contractAddress": "0x8766913DBB94f06FF47C7886f59d068146550534",
+  "deployTimestamp": "2025-03-20T17:48:13.879Z",
+  "network": "polygon"
+}
